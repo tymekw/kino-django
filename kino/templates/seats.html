@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h4>ekran</h4>
+        <hr style="width:100%;text-align:center;margin-left:0;border: 3px solid black; border-radius:3px;">
+      </div>
+    </div>
+  </section>
+  <div class="album py-5 bg-light">
+
+<div class='row' style="padding-left: 5%; padding-right:5%;">
+{% for seat in seats %}
+  <div class='col'>
+    {% if seat.category == 'empty' %}
+      <a href="/kino/confirm/{{ seat.seat_ID }}" type="button" class="btn btn-success btn-block">{{ seat.seat_number }}</a>
+    {% else %}
+      <button type="button" class="btn btn-block btn-danger"disabled>{{ seat.seat_number }}</button>
+    {% endif %}
+  </div>
+  {% if forloop.counter|divisibleby:"4" %}
+  <div class="w-100"></div>
+  {% endif %}
+{% endfor %}
+</div>
+<div class="w-100" style="padding-top: 5%;"></div>
+<a href="/kino/" type="button"  class="btn btn-secondary">Strona główna</a>
+</div>
+{% endblock %}

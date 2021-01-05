@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% block content %}
+{% if seats.0.category == "empty" %}
+<h3>seat number: {{ seats.0.seat_number }}</h3>
+<h3>row: {{ seats.0.row_num }}</h3>
+<h3>title: {{ seats.0.title }}</h3>
+<h3>date: {{seats.0.date}}</h3>
+<a href="done/{{seats.0.showtime_ID}}" class="btn btn-info" role="button">Potwierdzam</a>
+<a href="/kino/seats/{{seats.0.showtime_ID}}" class="btn btn-info" role="button">Powrót</a>
+{% else %}
+<h1> Nieładnie bawić się paskiem wyszukiwania </h1>
+{% endif %}
+{% endblock %}

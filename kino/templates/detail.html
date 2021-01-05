@@ -1,0 +1,64 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if movie_showtimes %}
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">{{ movie_showtimes.first.movie.title }}</h1>
+        <p class="lead text-muted">reżyser {{ movie_showtimes.first.movie.director }} </p>
+        <p class="lead text-muted">gatunek {{ movie_showtimes.first.movie.genre }} </p>
+        <p class="lead text-muted">język {{ movie_showtimes.first.movie.language }} </p>
+        <p class="lead text-muted">czas trwania {{ movie_showtimes.first.movie.length }} min</p>
+      </div>
+    </div>
+  </section>
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+{% for showtime in movie_showtimes %}
+ <div class="col">
+          <div class="card shadow-sm">
+
+
+            <div class="card-body">
+              <h5 class="card-title">{{ showtime.date }}</h5>
+              <h6 class="card-text">{{ showtime.movie.screening_category }} </h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href = "/kino/seats/{{ showtime.showtime_id}}" type="button" class="btn btn-sm btn-outline-secondary">wybierz seans</a>
+                </div></div>
+            </div>
+          </div>
+        </div>
+
+
+{% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+{% else %}
+  
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Przepraszamy</h1>
+        <p class="lead text-muted"> Dla wybranego filmu nie ma jeszcze seansów, zapraszamy na inne projekcje </p>
+      </div>
+    </div>
+  </section>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <p> Przepraszamy za utrudnienia </p>
+      <a href = "/kino" type="button" class="btn btn-sm btn-secondary">wybierz inny seans</a>
+      </div>
+    </div>
+  </div>
+
+{% endif %} 
+{% endblock %}

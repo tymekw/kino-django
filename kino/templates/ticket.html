@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+
+<h3>tytuł: {{ ticket.0.title }}</h3>
+<h3>data: {{ ticket.0.date }}</h3>
+<h3>numer miejsca: {{ ticket.0.seat_number }}</h3>
+<h3>rząd: {{ ticket.0.row_num }}</h3>
+<h3>cena: {{ ticket.0.price }}</h3>
+
+<a href="/kino/seats/{{ticket.0.showtime_ID}}" class="btn btn-info" role="button">Zarezerwuj kolejny bilet</a>
+<a href="/kino/" class="btn btn-info" role="button">Strona główna</a>
+
+{% endblock %}
