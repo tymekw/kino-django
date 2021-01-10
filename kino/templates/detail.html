@@ -21,10 +21,8 @@
 {% for showtime in movie_showtimes %}
  <div class="col">
           <div class="card shadow-sm">
-
-
             <div class="card-body">
-              <h5 class="card-title">{{ showtime.date }}</h5>
+              <h5 class="card-title">{{ showtime.date|date:"d E Y G:i D" }}</h5>
               <h6 class="card-text">{{ showtime.movie.screening_category }} </h6>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">

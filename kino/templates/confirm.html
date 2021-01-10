@@ -1,13 +1,26 @@
 {% extends "base_generic.html" %}
 {% block content %}
-{% if seats.0.category == "empty" %}
-<h3>seat number: {{ seats.0.seat_number }}</h3>
-<h3>row: {{ seats.0.row_num }}</h3>
-<h3>title: {{ seats.0.title }}</h3>
-<h3>date: {{seats.0.date}}</h3>
-<a href="done/{{seats.0.showtime_ID}}" class="btn btn-info" role="button">Potwierdzam</a>
-<a href="/kino/seats/{{seats.0.showtime_ID}}" class="btn btn-info" role="button">Powrót</a>
-{% else %}
-<h1> Nieładnie bawić się paskiem wyszukiwania </h1>
-{% endif %}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        {% if seats.0.category == "empty" %}
+        <h1 class="fw-light">{{ seats.0.title }}</h1>
+        <p class="lead text-muted">miejsce: {{ seats.0.seat_number }} </p>
+        <p class="lead text-muted">rząd: {{ seats.0.row_num }} </p>
+        <p class="lead text-muted">data: {{ seats.0.date }} </p>
+      </div>
+      </div>
+      <div class="btn-group">
+        <a href = "done/{{seats.0.showtime_ID}}" type="button" class="btn btn-sm btn-outline-secondary">Potwierdzam</a>
+        <a href = "/kino/seats/{{seats.0.showtime_ID}}" type="button" class="btn btn-sm btn-outline-secondary">Anuluj</a>
+      </div>
+        {% else %}
+        <h1>Miejsce zostało już wcześniej zarezerwowane. </h1>
+        </div></div>
+        <div class="btn-group">
+        <a href = "/kino" type="button" class="btn btn-sm btn-outline-secondary">strona główna</a>
+        </div>
+        {% endif %}
+</section>
 {% endblock %}

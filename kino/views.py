@@ -1,5 +1,5 @@
 from django.http import HttpResponse, Http404
-from .models import Movie, MovieShowtime, Seat
+from .models import Movie, MovieShowtime, Seat, Ticket
 from django.shortcuts import get_object_or_404, render
 from django.db import connection
 from collections import namedtuple
@@ -49,25 +49,28 @@ def confirm(request, seat_ID):
 
 
 def confirmed(request, seat_ID, showtime_ID):
-	with connection.cursor() as cursor:
-		cursor.execute(
-		'''UPDATE seat SET category='not-empty' WHERE seat_ID=%s''', [seat_ID]
-		)
-		cursor.execute(
-		'''INSERT INTO ticket (seat_ID, showtime_ID, price, price_category)
-		VALUES(%s,%s, 15, 'ULGOWY')''', [seat_ID, showtime_ID]
-		)
-		cursor.execute(
-		'''SELECT t.price, t.price_category, t.showtime_ID, sh.date, m.title, s.seat_number, s.row_num, h.hall_ID  
-		FROM ticket t LEFT JOIN movie_showtime sh ON sh.showtime_ID=t.showtime_ID
-		LEFT JOIN seat s ON s.seat_ID = t.seat_ID
-		LEFT JOIN movie m ON sh.movie_ID = m.movie_ID 
-		LEFT JOIN hall h ON h.hall_ID = sh.hall_ID
-		where t.seat_ID = %s and t.showtime_ID=%s''', [seat_ID, showtime_ID]
-		)
-		rows = dictfetchall(cursor)
-	return render(request, 'ticket.html',{'ticket': rows})
-
+	check = Ticket.objects.all()
+	if not check.filter(seat_id=seat_ID, showtime_id=showtime_ID).exists():
+		with connection.cursor() as cursor:
+			cursor.execute(
+			'''UPDATE seat SET category='not-empty' WHERE seat_ID=%s''', [seat_ID]
+			)
+			cursor.execute(
+			'''INSERT INTO ticket (seat_ID, showtime_ID, price, price_category)
+			VALUES(%s,%s, 15, 'ULGOWY')''', [seat_ID, showtime_ID]
+			)
+			cursor.execute(
+			'''SELECT t.price, t.price_category, t.showtime_ID, sh.date, m.title, s.seat_number, s.row_num, h.hall_ID  
+			FROM ticket t LEFT JOIN movie_showtime sh ON sh.showtime_ID=t.showtime_ID
+			LEFT JOIN seat s ON s.seat_ID = t.seat_ID
+			LEFT JOIN movie m ON sh.movie_ID = m.movie_ID 
+			LEFT JOIN hall h ON h.hall_ID = sh.hall_ID
+			where t.seat_ID = %s and t.showtime_ID=%s''', [seat_ID, showtime_ID]
+			)
+			rows = dictfetchall(cursor)
+		return render(request, 'ticket.html',{'ticket': rows})
+	else:
+		return render(request, 'ticket.html',{'check':check})
 
 
 

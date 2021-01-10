@@ -71,8 +71,8 @@ class Seat(models.Model):
 
 class Ticket(models.Model):
     ticket_id = models.AutoField(db_column='ticket_ID', primary_key=True)  # Field name made lowercase.
-    seat = models.ForeignKey(Seat, models.DO_NOTHING, db_column='seat_ID', blank=True, null=True)  # Field name made lowercase.
-    showtime = models.ForeignKey(MovieShowtime, models.DO_NOTHING, db_column='showtime_ID', blank=True, null=True)  # Field name made lowercase.
+    seat = models.ForeignKey(Seat, models.CASCADE, db_column='seat_ID', blank=True, null=True)  # Field name made lowercase.
+    showtime = models.ForeignKey(MovieShowtime, models.CASCADE, db_column='showtime_ID', blank=True, null=True)  # Field name made lowercase.
     price = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     price_category = models.CharField(max_length=45, blank=True, null=True)
 
