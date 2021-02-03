@@ -1,3 +1,3 @@
 # kino-django 
 
-screenshots from webside in /photos
+screenshots and database diagram from webside in /photos
